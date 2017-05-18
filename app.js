@@ -12,6 +12,7 @@
         }
 
         var onFailure = function (reason) {
+            $scope.quoteData = "";
             $scope.message = "Unable to fetch data";
         }
         $scope.getQuote = function(){
