@@ -1,20 +1,22 @@
-(function(){
-	'use strict';
-	angular.module('RQApp', [])
-	.controller('RQAppController', RQAppController);
+(function () {
+    'use strict';
+    angular.module('RQApp', [])
+        .controller('RQAppCtrl', RQAppCtrl);
 
-	RQAppController.$inject = ['$scope', '$http']
-	
-	function RQAppController ($scope,$http){
+    RQAppCtrl.$inject = ["$scope", "$http"];
 
-		$scope.getQuote = function(){ $http({
-				method : "GET",
-				url : "http://quotes.stormconsultancy.co.uk/random.json"
-			}).then(function mySuccess(response){
-				$scope.myResponse = response.data;
-			}, function myError(response){
-				$scope.myResponse = response.statusText;
-			});
-		}
-	};
-})()
+    function RQAppCtrl($scope, $http) {
+
+        var onSuccess = function (response) {
+            $scope.quoteData = response.data;
+        }
+
+        var onFailure = function (reason) {
+            $scope.message = "Unable to fetch data";
+        }
+        $scope.getQuote = function(){
+            $http.get("http://quotes.stormconsultancy.co.uk/random.json")
+            .then(onSuccess, onFailure);
+        }
+    }
+})();
